@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Message</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .message-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  h1 {
+    color: #ff6347;
+    margin-bottom: 10px;
+  }
+  p {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .back-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  .back-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+  <div class="message-container">
+    <h1>Error</h1>
+    <p>Invalid email or password</p>
+    <a href="/login.html" class="back-btn">Go Back</a>
+  </div>
+</body>
+</html>

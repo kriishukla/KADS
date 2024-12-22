@@ -1,0 +1,88 @@
+Use kads;
+
+CREATE TABLE LoginAttempts (
+    AttemptID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID VARCHAR(20),
+    AttemptTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Success BOOLEAN,
+    FOREIGN KEY (CustomerID) REFERENCES CUSTOMER(CustomerID)
+);
+
+ALTER TABLE CUSTOMER
+ADD COLUMN AccountLockedUntil DATETIME NULL;
+
+DELIMITER //
+CREATE TRIGGER AfterFailedLogin
+AFTER INSERT ON LoginAttempts
+FOR EACH ROW
+BEGIN
+    DECLARE failedAttempts INT;
+
+    SELECT COUNT(*) INTO failedAttempts
+    FROM LoginAttempts
+    WHERE CustomerID = NEW.CustomerID
+      AND AttemptTime > NOW() - INTERVAL 10 MINUTE
+      AND Success = FALSE;
+
+    IF failedAttempts > 3 THEN
+        UPDATE CUSTOMER
+        SET AccountLockedUntil = NOW() + INTERVAL 2 MINUTE
+        WHERE CustomerID = NEW.CustomerID;
+    END IF;
+END //
+DELIMITER ;
+
+ALTER TABLE CUSTOMER
+ADD COLUMN SecurityQuestion VARCHAR(255),
+ADD COLUMN SecurityAnswer VARCHAR(255);
+
+DELIMITER //
+
+CREATE TRIGGER decrement_stock_after_add_to_cart
+AFTER INSERT ON cart_items
+FOR EACH ROW
+BEGIN
+    -- Update the stock of the product in the products table
+    UPDATE products
+    SET stock = stock - 1
+    WHERE product_id = NEW.product_id;
+END;
+//
+
+DELIMITER ;
+
+till here
+
+CREATE TRIGGER BeforePasswordUpdate
+BEFORE UPDATE ON customer
+FOR EACH ROW
+BEGIN
+    IF LENGTH(NEW.password) < 8 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Password must be at least 8 characters long.';
+    END IF;
+END$$
+
+DELIMITER ;
+CREATE TRIGGER AfterPasswordUpdate
+AFTER UPDATE ON customer
+FOR EACH ROW
+BEGIN
+    IF OLD.password <> NEW.password THEN
+        INSERT INTO password_change_log(customer_id, old_password, change_time)
+        VALUES (NEW.customer_id, OLD.password, NOW());
+    END IF;
+END$$
+
+DELIMITER ;
+CREATE TRIGGER AfterPasswordUpdate
+AFTER UPDATE ON customer
+FOR EACH ROW
+BEGIN
+    IF OLD.password <> NEW.password THEN
+        INSERT INTO password_change_log(customer_id, old_password, change_time)
+        VALUES (NEW.customer_id, OLD.password, NOW());
+    END IF;
+END$$
+DELIMITER ;
+

@@ -1,0 +1,170 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Login</title>#}
+{#    <link rel="stylesheet" href="../static/styles.css">#}
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">#}
+{##}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background-color: #111111;#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#            display: flex;#}
+{#            justify-content: center;#}
+{#            align-items: center;#}
+{#            height: 100vh;#}
+{#        }#}
+{#        .container {#}
+{#            background-color: #ffffff;#}
+{#            padding: 40px;#}
+{#            border-radius: 8px;#}
+{#            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);#}
+{#            width: 400px;#}
+{#            text-align: center;#}
+{#        }#}
+{#        h2 {#}
+{#            margin-top: 0;#}
+{#            color: #333333;#}
+{#        }#}
+{#        label {#}
+{#            font-weight: bold;#}
+{#            color: #555555;#}
+{#            display: block;#}
+{#            margin-bottom: 6px;#}
+{#            text-align: left;#}
+{#        }#}
+{#        input[type="email"],#}
+{#        input[type="password"] {#}
+{#            width: calc(100% - 20px);#}
+{#            padding: 10px;#}
+{#            margin: 8px 0;#}
+{#            border: 1px solid #cccccc;#}
+{#            border-radius: 4px;#}
+{#            box-sizing: border-box;#}
+{#            transition: border-color 0.3s ease;#}
+{#        }#}
+{#        input[type="email"]:focus,#}
+{#        input[type="password"]:focus {#}
+{#            border-color: #007bff;#}
+{#        }#}
+{#        input[type="submit"] {#}
+{#            background-color: #007bff;#}
+{#            color: #ffffff;#}
+{#            padding: 12px 20px;#}
+{#            border: none;#}
+{#            border-radius: 4px;#}
+{#            cursor: pointer;#}
+{#            transition: background-color 0.3s ease;#}
+{#        }#}
+{#        input[type="submit"]:hover {#}
+{#            background-color: #0056b3;#}
+{#        }#}
+{#        p {#}
+{#            margin-top: 20px;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#    <div class="container">#}
+{#        <h2>Login</h2>#}
+{#        <form action="/login.html" method="post">#}
+{#            <label for="login_email">Email:</label>#}
+{#            <input type="email" id="login_email" name="email" required>#}
+{#            <label for="login_password">Password:</label>#}
+{#            <input type="password" id="login_password" name="password" required>#}
+{#            <input type="submit" value="Login">#}
+{#        </form>#}
+{#        <p>Don't have an account? <a href="/signup.html">Signup here</a>.</p>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333333;
+        }
+        label {
+            font-weight: bold;
+            color: #555555;
+            display: block;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <h2>Login</h2>
+        <form action="/login.html" method="post">
+            <label for="login_email">Email:</label>
+            <input type="email" id="login_email" name="email" required>
+            <label for="login_password">Password:</label>
+            <input type="password" id="login_password" name="password" required>
+            <input type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="/signup.html">Signup here</a>.</p>
+        <p><a href="/forgot_password.html">Forgot Password?</a></p>
+    </div>
+</body>
+</html>

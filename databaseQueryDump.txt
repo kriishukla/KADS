@@ -1,0 +1,378 @@
+CREATE DATABASE kads;
+USE kads;
+
+CREATE TABLE ADMIN (
+    AdminID VARCHAR(3) NOT NULL UNIQUE,
+    Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Revenue FLOAT CHECK(Revenue >= 0) NOT NULL,
+    PRIMARY KEY (AdminID)
+);
+
+INSERT INTO ADMIN (AdminID, Name, Email, Revenue)
+VALUES
+('001', 'Rajesh Kumar', 'rajesh.kumar@email.com', 50000.50),
+('002', 'Priya Singh', 'priya.singh@email.com', 75000.75),
+('003', 'Amit Sharma', 'amit.sharma@email.com', 100000.00),
+('004', 'Deepa Patel', 'deepa.patel@email.com', 120000.25);
+
+
+CREATE TABLE CUSTOMER (
+    CustomerID VARCHAR(20) NOT NULL UNIQUE,
+    FullName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    ContactDetails BIGINT(13) UNIQUE NOT NULL,
+    AddressLine1 VARCHAR(100) NOT NULL,
+    AddressLine2 VARCHAR(100),
+    AddressLine3 VARCHAR(100),
+    Password VARCHAR(50) CHECK(LENGTH(Password) >= 8) NOT NULL,
+    OrderHistory INT,
+    MembershipStatus INT CHECK(MembershipStatus IN (0, 1)),
+    PRIMARY KEY (CustomerID)
+);
+
+INSERT INTO CUSTOMER (CustomerID, FullName, Email, ContactDetails, AddressLine1, AddressLine2, AddressLine3, Password)
+VALUES
+('2022krishna1872388', 'Krishna Patel', 'krishna@email.com', 9876543210, 'Street 1', 'Mumbai', 'Maharashtra', 'password123'),
+('2022sharma2987654', 'Arun Sharma', 'arun@email.com', 8765432109, 'Street 2', 'Delhi', 'Delhi', 'securepass'),
+('2022verma3876543', 'Sneha Verma', 'sneha@email.com', 7654321098, 'Street 3', 'Bangalore', 'Karnataka', 'pass123word'),
+('2022kapoor4765432', 'Vikas Kapoor', 'vikas@email.com', 6543210987, 'Street 4', 'Chennai', 'Tamil Nadu', 'userpass456'),
+('2022reddy5654321', 'Neha Reddy', 'neha@email.com', 5432109876, 'Street 5', 'Kolkata', 'West Bengal', 'secure123'),
+('2022mehra6543210', 'Karan Mehra', 'karan@email.com', 4321098765, 'Street 6', 'Hyderabad', 'Telangana', 'mypassword'),
+('2022gupta7432109', 'Rahul Gupta', 'rahul@email.com', 3210987654, 'Street 7', 'Pune', 'Maharashtra', 'pass789word'),
+('2022desai8321098', 'Anjali Desai', 'anjali@email.com', 2109876543, 'Street 8', 'Ahmedabad', 'Gujarat', 'secureword123'),
+('2022rajan9210987', 'Deepak Rajan', 'deepak@email.com', 1098765432, 'Street 9', 'Jaipur', 'Rajasthan', 'securepass567'),
+('2022mehta0187654', 'Rita Mehta', 'rita@email.com', 9876513210, 'Street 10', 'Lucknow', 'Uttar Pradesh', 'pass123word');
+
+
+CREATE TABLE EMPLOYEE (
+    EmployeeID VARCHAR(60) NOT NULL UNIQUE,
+    Name VARCHAR(30) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE,
+    Role VARCHAR(30) NOT NULL,
+    Salary INT(20) CHECK(Salary >= 0) NOT NULL,
+    PRIMARY KEY (EmployeeID)
+);
+INSERT INTO EMPLOYEE (EmployeeID, Name, Email, Role, Salary)
+VALUES
+('E001', 'Amit Kumar', 'amit.kumar@email.com', 'Developer', 60000),
+('E002', 'Pooja Sharma', 'pooja.sharma@email.com', 'Designer', 55000),
+('E003', 'Rahul Singh', 'rahul.singh@email.com', 'Manager', 80000),
+('E004', 'Sneha Verma', 'sneha.verma@email.com', 'Tester', 50000),
+('E005', 'Vikas Gupta', 'vikas.gupta@email.com', 'Analyst', 70000),
+('E006', 'Deepika Patel', 'deepika.patel@email.com', 'Developer', 65000),
+('E007', 'Raj Sharma', 'raj.sharma@email.com', 'Designer', 60000),
+('E008', 'Neha Singh', 'neha.singh@email.com', 'Manager', 85000),
+('E009', 'Karan Verma', 'karan.verma@email.com', 'Tester', 52000),
+('E010', 'Rita Gupta', 'rita.gupta@email.com', 'Analyst', 72000);
+
+CREATE TABLE WAREHOUSE (
+    WarehouseID VARCHAR(30) NOT NULL UNIQUE,
+    Name VARCHAR(30) NOT NULL,
+    AddressLine1 VARCHAR(100) NOT NULL,
+    AddressLine2 VARCHAR(100),
+    AddressLine3 VARCHAR(100),
+    Capacity INT(30) CHECK(Capacity >= 0) NOT NULL,
+    ManagerID VARCHAR(60) NOT NULL,
+    Contact BIGINT(60) NOT NULL,
+    PRIMARY KEY (WarehouseID),
+    CONSTRAINT fk_manager
+        FOREIGN KEY (ManagerID)
+        REFERENCES EMPLOYEE(EmployeeID)
+);
+
+ALTER TABLE WAREHOUSE
+ADD CONSTRAINT fk_manager_employee
+FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID);
+
+INSERT INTO WAREHOUSE (WarehouseID, Name, AddressLine1, AddressLine2, AddressLine3, Capacity, ManagerID, Contact)
+VALUES
+('W001', 'Warehouse Mumbai', 'Colaba Causeway', 'Mumbai', 'Maharashtra', 5000, 'E001', 9876543210),
+('W002', 'Warehouse Delhi', 'Connaught Place', 'New Delhi', 'Delhi', 7000, 'E002', 8765432109),
+('W003', 'Warehouse Bengaluru', 'MG Road', 'Bangalore', 'Karnataka', 6000, 'E003', 7654321098),
+('W004', 'Warehouse Chennai', 'Mount Road', 'Chennai', 'Tamil Nadu', 8000, 'E004', 6543210987),
+('W005', 'Warehouse Kolkata', 'Park Street', 'Kolkata', 'West Bengal', 5500, 'E005', 5432109876),
+('W006', 'Warehouse Hyderabad', 'Banjara Hills', 'Hyderabad', 'Telangana', 6500, 'E006', 4321098765),
+('W007', 'Warehouse Pune', 'Koregaon Park', 'Pune', 'Maharashtra', 7000, 'E007', 3210987654),
+('W008', 'Warehouse Ahmedabad', 'C.G. Road', 'Ahmedabad', 'Gujarat', 7500, 'E008', 2109876543),
+('W009', 'Warehouse Jaipur', 'MI Road', 'Jaipur', 'Rajasthan', 6000, 'E009', 1098765432),
+('W010', 'Warehouse Lucknow', 'Hazratganj', 'Lucknow', 'Uttar Pradesh', 8000, 'E010', 9876543210);
+
+
+CREATE TABLE Manages (
+    WarehouseID VARCHAR(60) NOT NULL,
+    ManagerID VARCHAR(60) NOT NULL,
+    PRIMARY KEY (WarehouseID, ManagerID),
+    CONSTRAINT fk_warehouseid
+        FOREIGN KEY (WarehouseID)
+        REFERENCES WAREHOUSE(WarehouseID),
+    CONSTRAINT fk_managerid
+        FOREIGN KEY (ManagerID)
+        REFERENCES EMPLOYEE(EmployeeID)
+);
+
+INSERT INTO Manages (WarehouseID, ManagerID)
+VALUES
+('W001', 'E001'),
+('W002', 'E002'),
+('W003', 'E003'),
+('W004', 'E004'),
+('W005', 'E005'),
+('W006', 'E006'),
+('W007', 'E007'),
+('W008', 'E008'),
+('W009', 'E009'),
+('W010', 'E010');
+
+CREATE TABLE ORDERS (
+    OrderID VARCHAR(60) NOT NULL UNIQUE,
+    OrderDetail VARCHAR(100) NOT NULL,
+    CustomerID VARCHAR(30) NOT NULL UNIQUE,
+    Status VARCHAR(20) NOT NULL,
+    PaymentMethod VARCHAR(20) NOT NULL,
+    OrderTime TIME NOT NULL,
+    OrderDate DATE NOT NULL,
+    OrderAmount INT NOT NULL,
+    Quantity INT NOT NULL,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT fk_customer
+        FOREIGN KEY (CustomerID)
+        REFERENCES CUSTOMER(CustomerID)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO ORDERS (OrderID, OrderDetail, CustomerID, Status, PaymentMethod, OrderTime, OrderDate, OrderAmount, Quantity)
+VALUES
+('O001', 'P001', '2022krishna1872388', 'Pending', 'Credit Card', '12:00:00', '2024-02-08', 80000, 1),
+('O002', 'P002', '2022sharma2987654', 'Processing', 'Debit Card', '12:30:00', '2024-02-08', 50000, 2),
+('O003', 'P003', '2022verma3876543', 'Shipped', 'PayPal', '13:00:00', '2024-02-08', 15000, 1),
+('O004', 'P004', '2022kapoor4765432', 'Delivered', 'Cash on Delivery', '13:30:00', '2024-02-08', 12000, 1),
+('O005', 'P005', '2022reddy5654321', 'Pending', 'Credit Card', '14:00:00', '2024-02-08', 60000, 1),
+('O006', 'P006', '2022mehra6543210', 'Processing', 'Debit Card', '14:30:00', '2024-02-08', 70000, 1),
+('O007', 'P007', '2022gupta7432109', 'Shipped', 'Credit Card', '15:00:00', '2024-02-08', 8000, 3),
+('O008', 'P008', '2022desai8321098', 'Delivered', 'PayPal', '15:30:00', '2024-02-08', 35000, 1),
+('O009', 'P009', '2022rajan9210987', 'Pending', 'Cash on Delivery', '16:00:00', '2024-02-08', 10000, 2),
+('O010', 'P010', '2022mehta0187654', 'Processing', 'Credit Card', '16:30:00', '2024-02-08', 60000, 1);
+
+CREATE TABLE PREMIUM_MEMBER (
+    CustomerID VARCHAR(20) NOT NULL UNIQUE,
+    SubscriptionTime TIME NOT NULL,
+    AmountPaid INT(100) NOT NULL,
+    PRIMARY KEY (CustomerID)
+);
+
+ALTER TABLE PREMIUM_MEMBER
+ADD CONSTRAINT fk_customer_premium
+FOREIGN KEY (CustomerID)
+REFERENCES CUSTOMER(CustomerID)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+INSERT INTO PREMIUM_MEMBER (CustomerID, SubscriptionTime, AmountPaid)
+VALUES
+('2022krishna1872388', '12:00:00', 500),
+('2022sharma2987654', '12:30:00', 750),
+('2022verma3876543', '13:00:00', 600),
+('2022kapoor4765432', '13:30:00', 800),
+('2022reddy5654321', '14:00:00', 550),
+('2022mehra6543210', '14:30:00', 700),
+('2022gupta7432109', '15:00:00', 900);
+
+CREATE TABLE PRODUCT (
+    ProductID VARCHAR(60) NOT NULL UNIQUE,
+    Name VARCHAR(30) NOT NULL,
+    Description VARCHAR(100) NOT NULL,
+    Price INT(100) CHECK(Price > 0) NOT NULL,
+    Size INT(100) NOT NULL,
+    Stock INT(30) CHECK(Stock >= 0) NOT NULL,
+    PRIMARY KEY (ProductID)
+);
+INSERT INTO PRODUCT (ProductID, Name, Description, Price, Size, Stock)
+VALUES
+('P001', 'Dell Inspiron XPS', 'High-performance laptop with the latest features', 80000, 15, 50),
+('P002', 'iPhone 13 Pro', 'Flagship smartphone with advanced camera and features', 50000, 6, 100),
+('P003', 'Samsung Galaxy Watch 4', 'Fitness and health tracking smartwatch', 15000, 3, 30),
+('P004', 'Sony WF-1000XM4', 'Premium noise-canceling wireless earbuds', 12000, 1, 20),
+('P005', 'iPad Pro', 'Large-screen tablet with versatile applications', 60000, 12, 40),
+('P006', 'Canon EOS R5', 'High-resolution digital camera for photography enthusiasts', 70000, 8, 15),
+('P007', 'Bose QuietComfort 35 II', 'Over-ear headphones with immersive sound quality', 8000, 5, 50),
+('P008', 'PlayStation 5', 'Powerful gaming console for an immersive gaming experience', 35000, 10, 25),
+('P009', 'Fitbit Charge 5', 'Wearable fitness tracker for activity monitoring', 10000, 2, 40),
+('P010', 'Sonos Arc', 'Complete home theater system for cinematic sound', 60000, 20, 10);
+
+CREATE TABLE PRODUCT_CATEGORY (
+    CategoryID VARCHAR(60) NOT NULL UNIQUE,
+    Name VARCHAR(60) NOT NULL,
+    Description VARCHAR(100) NOT NULL,
+    ParentCategoryID VARCHAR(30),
+    PRIMARY KEY (CategoryID),
+    FOREIGN KEY (ParentCategoryID) REFERENCES PRODUCT_CATEGORY(CategoryID)
+);
+
+INSERT INTO PRODUCT_CATEGORY (CategoryID, Name, Description, ParentCategoryID)
+VALUES
+('C000', 'Electronics', 'Smart Electronic items in various categories', null),
+('C001', 'Laptops', 'Various models of laptops from top brands', 'C000'),
+('C002', 'Smartphones', 'Latest smartphones with advanced features', 'C000'),
+('C003', 'Wearables', 'Fitness trackers and smartwatches', 'C000'),
+('C004', 'Audio', 'Headphones, earbuds, and audio accessories', 'C000'),
+('C005', 'Tablets', 'Large-screen tablets for various purposes', 'C000'),
+('C006', 'Cameras', 'Digital cameras for photography enthusiasts', 'C000'),
+('C007', 'Gaming', 'Gaming consoles and accessories', 'C000'),
+('C008', 'Home Audio', 'Audio systems for home entertainment', 'C000'),
+('C009', 'Fitness Tech', 'Fitness trackers and health monitoring devices', 'C000'),
+('C010', 'Home Theater', 'Complete home theater systems', 'C000');
+
+ALTER TABLE PRODUCT
+ADD COLUMN ParentID VARCHAR(20),
+ADD CONSTRAINT fk_parent_category
+FOREIGN KEY (ParentID) REFERENCES PRODUCT_CATEGORY(CategoryID)
+ON DELETE CASCADE;
+
+UPDATE PRODUCT SET ParentID = 'C001' WHERE ProductID = 'P001';
+UPDATE PRODUCT SET ParentID = 'C002' WHERE ProductID = 'P002';
+UPDATE PRODUCT SET ParentID = 'C003' WHERE ProductID = 'P003';
+UPDATE PRODUCT SET ParentID = 'C004' WHERE ProductID = 'P004';
+UPDATE PRODUCT SET ParentID = 'C005' WHERE ProductID = 'P005';
+UPDATE PRODUCT SET ParentID = 'C006' WHERE ProductID = 'P006';
+UPDATE PRODUCT SET ParentID = 'C007' WHERE ProductID = 'P007';
+UPDATE PRODUCT SET ParentID = 'C008' WHERE ProductID = 'P008';
+UPDATE PRODUCT SET ParentID = 'C009' WHERE ProductID = 'P009';
+UPDATE PRODUCT SET ParentID = 'C010' WHERE ProductID = 'P010';
+
+
+CREATE TABLE STATUS (
+    OrderID VARCHAR(60) NOT NULL UNIQUE,
+    Status VARCHAR(30) NOT NULL,
+    ChangeWithTime DATETIME NOT NULL, -- or TIMESTAMP
+    DeliveryDate DATE NOT NULL,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT fk_order
+        FOREIGN KEY (OrderID)
+        REFERENCES ORDERS(OrderID)
+);
+
+DELIMITER //
+
+CREATE PROCEDURE CheckDeliveryDate(IN p_OrderID VARCHAR(60))
+BEGIN
+    DECLARE v_OrderDate DATE;
+    DECLARE v_DeliveryDate DATE;
+
+    SELECT OrderDate INTO v_OrderDate
+    FROM ORDERS
+    WHERE OrderID = p_OrderID;
+
+    SELECT DeliveryDate INTO v_DeliveryDate
+    FROM STATUS
+    WHERE OrderID = p_OrderID;
+
+    IF v_DeliveryDate < v_OrderDate THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Delivery date is before order date';
+    END IF;
+END //
+
+DELIMITER ;
+
+INSERT INTO STATUS (OrderID, Status, ChangeWithTime, DeliveryDate)
+VALUES
+('O001', 'Processing', '2024-02-10 12:30:00', '2024-02-10'),
+('O002', 'Shipped', '2024-02-11 13:30:00', '2024-02-11'),
+('O003', 'Delivered', '2024-02-12 14:30:00', '2024-02-12'),
+('O004', 'Pending', '2024-02-13 15:30:00', '2024-02-13'),
+('O005', 'Shipped', '2024-02-14 16:30:00', '2024-02-14'),
+('O006', 'Delivered', '2024-02-15 17:30:00', '2024-02-15'),
+('O007', 'Processing', '2024-02-16 18:30:00', '2024-02-16'),
+('O008', 'Delivered', '2024-02-17 19:30:00', '2024-02-17'),
+('O009', 'Pending', '2024-02-18 20:30:00', '2024-02-18'),
+('O010', 'Shipped', '2024-02-19 21:30:00', '2024-02-19');
+
+
+CREATE TABLE Stores (
+    ProductID VARCHAR(60) NOT NULL,
+    WarehouseID VARCHAR(60) NOT NULL,
+    PRIMARY KEY (ProductID, WarehouseID),
+    CONSTRAINT fk_product
+        FOREIGN KEY (ProductID)
+        REFERENCES PRODUCT(ProductID),
+    CONSTRAINT fk_warehouse
+        FOREIGN KEY (WarehouseID)
+        REFERENCES WAREHOUSE(WarehouseID)
+);
+
+INSERT INTO Stores (ProductID, WarehouseID)
+VALUES
+('P001', 'W001'),
+('P002', 'W002'),
+('P003', 'W003'),
+('P004', 'W004'),
+('P005', 'W005'),
+('P006', 'W006'),
+('P007', 'W007'),
+('P008', 'W008'),
+('P009', 'W009'),
+('P010', 'W010');
+
+CREATE TABLE Supplier (
+    SupplierID VARCHAR(60) NOT NULL UNIQUE,
+    Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(30) UNIQUE NOT NULL,
+    AddressLine1 VARCHAR(100) NOT NULL,
+    AddressLine2 VARCHAR(100),
+    AddressLine3 VARCHAR(100),
+    Password VARCHAR(50) NOT NULL,
+    PRIMARY KEY (SupplierID)
+);
+
+INSERT INTO SUPPLIER (SupplierId, Name, Email, AddressLine1, AddressLine2, AddressLine3, Password)
+VALUES
+('2022krishna1872388', 'Krishna Suppliers', 'krishna@email.com', 'Street 1', 'Mumbai', 'Maharashtra', 'password123'),
+('2022sharma2987654', 'Sharma Distributors', 'sharma@email.com', 'Street 2', 'Delhi', 'Delhi', 'securepass'),
+('2022verma3876543', 'Verma Traders', 'verma@email.com', 'Street 3', 'Bangalore', 'Karnataka', 'pass123word'),
+('2022kapoor4765432', 'Kapoor Enterprises', 'kapoor@email.com', 'Street 4', 'Chennai', 'Tamil Nadu', 'userpass456'),
+('2022reddy5654321', 'Reddy Importers', 'reddy@email.com', 'Street 5', 'Kolkata', 'West Bengal', 'secure123'),
+('2022mehra6543210', 'Mehra Suppliers', 'mehra@email.com', 'Street 6', 'Hyderabad', 'Telangana', 'mypassword'),
+('2022gupta7432109', 'Gupta Wholesalers', 'gupta@email.com', 'Street 7', 'Pune', 'Maharashtra', 'pass789word'),
+('2022desai8321098', 'Desai Exporters', 'desai@email.com', 'Street 8', 'Ahmedabad', 'Gujarat', 'secureword123'),
+('2022rajan9210987', 'Rajan Trading Co.', 'rajan@email.com', 'Street 9', 'Jaipur', 'Rajasthan', 'securepass567'),
+('2022mehta0187654', 'Mehta Supplies', 'mehta@email.com', 'Street 10', 'Lucknow', 'Uttar Pradesh', 'pass123word');
+
+CREATE TABLE Submits_Proposal_To (
+    WarehouseID VARCHAR(60) NOT NULL,
+    SupplierID VARCHAR(60) NOT NULL,
+    PRIMARY KEY (WarehouseID, SupplierID),
+    CONSTRAINT fk_warehouse_submit_proposal
+        FOREIGN KEY (WarehouseID)
+        REFERENCES WAREHOUSE(WarehouseID),
+    CONSTRAINT fk_supplier_submit_proposal
+        FOREIGN KEY (SupplierID)
+        REFERENCES SUPPLIER(SupplierID)
+);
+
+INSERT INTO Submits_Proposal_To (WarehouseID, SupplierID)
+VALUES
+('W001', '2022krishna1872388'),
+('W002', '2022sharma2987654'),
+('W003', '2022verma3876543'),
+('W004', '2022kapoor4765432'),
+('W005', '2022reddy5654321'),
+('W006', '2022mehra6543210'),
+('W007', '2022gupta7432109'),
+('W008', '2022desai8321098'),
+('W009', '2022rajan9210987'),
+('W010', '2022mehta0187654');
+
+CREATE TABLE Website (
+    DomainName VARCHAR(60) NOT NULL UNIQUE,
+    PaymentMethod VARCHAR(30) NOT NULL,
+    Linktree VARCHAR(100) UNIQUE NOT NULL,
+    ContactDetails VARCHAR(20) UNIQUE NOT NULL,
+    Email VARCHAR(30) UNIQUE NOT NULL,
+    PRIMARY KEY (DomainName)
+);
+
+INSERT INTO WEBSITE (DomainName, PaymentMethod, Linktree, ContactDetails, Email)
+VALUES ('KADS', 'Credit Card', 'linktree.com/kads', 123456789012345, 'info@kads.com');
+
+

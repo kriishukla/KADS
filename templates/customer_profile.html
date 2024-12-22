@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333333;
+        }
+
+        p {
+            color: #555555;
+            margin-top: 10px;
+        }
+
+        .address {
+            margin-top: 20px;
+            color: #777777;
+        }
+
+        .logout-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.FullName }}!</h1>
+        <p>Email: {{ user.Email }}</p>
+        <p>Contact: {{ user.ContactDetails }}</p>
+        <div class="address">
+            <p>Address:</p>
+            <p>{{ user.AddressLine1 }}</p>
+            <p>{{ user.AddressLine2 }}</p>
+            <p>{{ user.AddressLine3 }}</p>
+        </div>
+        <a class="logout-button" href="/"><button>Logout</button></a>
+    </div>
+</body>
+</html>

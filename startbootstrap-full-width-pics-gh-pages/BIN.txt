@@ -1,0 +1,65 @@
+# @app.route('/login.html', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         password = request.form.get('password')
+#         if not email or not password:
+#             return "Email and password are required."
+#         connect = mysql.connector.connect(**db_config)
+#         cursor = connect.cursor(dictionary=True)
+#         cursor.execute("SELECT * FROM customer WHERE Email = %s AND Password = %s", (email, password))
+#         user = cursor.fetchone()
+#         cursor.close()
+#         connect.close()
+#         if user:
+#             return render_template('/customerHome.html', user=user)
+#         else:
+#             return "Invalid email or password"
+#     else:
+#         return render_template('login.html')
+
+
+
+
+
+
+# @app.route('/signup.html', methods=['POST', 'GET'])
+# def signup():
+#     if request.method == 'POST':
+#         fullname = request.form['fullname']
+#         email = request.form['email']
+#         contact = request.form['contact']
+#         address1 = request.form['address1']
+#         address2 = request.form['address2']
+#         address3 = request.form['address3']
+#         password = request.form['password']
+#         customerid = str(datetime.date.today().year) + fullname.split()[0] + contact[5:10]
+#         contact = int(contact)
+#
+#         connect = mysql.connector.connect(**db_config)
+#         cursor = connect.cursor()
+#         cursor.execute(
+#             "INSERT INTO customer (CustomerID, FullName, Email, ContactDetails, AddressLine1, AddressLine2, AddressLine3, Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+#             (customerid, fullname, email, contact, address1, address2, address3, password))
+#         connect.commit()
+#         cursor.close()
+#         connect.close()
+#
+#         return redirect(url_for('index'))
+#     else:
+#         return render_template('/signup.html')
+
+
+
+# @app.route('/add_to_cart/<string:product_id>/<dictionary:customer_id>', methods=['POST'])
+# def add_to_cart(product_id, customer_id):
+#     # Insert the product into the cart table
+#     connect = mysql.connector.connect(**db_config)
+#     cursor = connect.cursor()
+#     cursor.execute("INSERT INTO cart (ProductID, Quantity, CustomerID) VALUES (%s, %s, %s)", (product_id, 1, customer_id))
+#     connect.commit()
+#     cursor.close()
+#     connect.close()
+#
+#     return render_template('/get_products.html')
+
